@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local Databases (Keep your thoughts private!)
+diary.txt
+diary_backup.txt
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Other python scripts to ignore
+dairy.py
+claude.py
+
+# Academic study materials (Keep local only)
+easy_study_guide.md
+diary_guide.md
