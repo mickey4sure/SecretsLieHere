@@ -48,8 +48,13 @@ class PersonalDiary:
         """
         Appends a new entry with date, time, and custom body text to the file.
         """
-        # Get date and validate format
-        date_str = input("\nEnter date (YYYY-MM-DD) [Leave blank for today]: ").strip()
+        try:
+            # Get date and validate format
+            date_str = input("\nEnter date (YYYY-MM-DD) [Leave blank for today]: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nOperation cancelled.")
+            return
+
         if date_str == "":
             entry_date = datetime.now().strftime("%Y-%m-%d")
         else:
@@ -62,11 +67,14 @@ class PersonalDiary:
                 return
 
         # Prompt user to input multi-line thoughts
-        print("Write your entry. Press Ctrl+Z (Windows) or Ctrl+D (Mac/Linux) and Enter when finished:")
+        print("Write your entry. Type 'SAVE' on a new line and press Enter when finished:")
         lines = []
         try:
             while True:
-                lines.append(input())
+                line = input()
+                if line.strip().upper() == "SAVE":
+                    break
+                lines.append(line)
         except (EOFError, KeyboardInterrupt):
             # catch EOF/Interrupt gracefully so it stops reading input without crashing
             pass
@@ -122,7 +130,12 @@ class PersonalDiary:
         """
         Deletes the main diary file and backup file after user confirmation.
         """
-        confirm = input("\nAre you sure you want to delete all entries? (yes/no): ").strip().lower()
+        try:
+            confirm = input("\nAre you sure you want to delete all entries? (yes/no): ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print("\nOperation cancelled.")
+            return
+
         if confirm != "yes":
             print("Delete operation cancelled.")
             return
@@ -158,26 +171,29 @@ class PersonalDiary:
         # run backup routine on start
         self.create_backup()
 
-        while True:
-            print("\n--- MAIN MENU ---")
-            print("1. Write a new entry")
-            print("2. Read all entries")
-            print("3. Delete diary files")
-            print("4. Exit")
-            
-            choice = input("\nEnter choice (1-4): ").strip()
-            
-            if choice == "1":
-                self.write_entry()
-            elif choice == "2":
-                self.read_entries()
-            elif choice == "3":
-                self.clear_all()
-            elif choice == "4":
-                print("\nGoodbye!\n")
-                break
-            else:
-                print("Invalid option. Please try again.")
+        try:
+            while True:
+                print("\n--- MAIN MENU ---")
+                print("1. Write a new entry")
+                print("2. Read all entries")
+                print("3. Delete diary files")
+                print("4. Exit")
+                
+                choice = input("\nEnter choice (1-4): ").strip()
+                
+                if choice == "1":
+                    self.write_entry()
+                elif choice == "2":
+                    self.read_entries()
+                elif choice == "3":
+                    self.clear_all()
+                elif choice == "4":
+                    print("\nGoodbye!\n")
+                    break
+                else:
+                    print("Invalid option. Please try again.")
+        except (EOFError, KeyboardInterrupt):
+            print("\n\nExiting application. Goodbye!\n")
 
 
 if __name__ == "__main__":
