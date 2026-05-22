@@ -29,7 +29,7 @@ python --version
 ### Installation
 Clone this repository to your local machine:
 ```bash
-git clone https://github.com/your-username/journal.git
+git clone https://github.com/mickey4sure/secretsliehere.git
 cd journal
 ```
 
